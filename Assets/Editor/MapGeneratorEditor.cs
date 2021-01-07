@@ -22,5 +22,14 @@ public class MapGeneratorEditor : Editor
         {
             mapGen.GenerateMap();
         }
+
+        if (GUILayout.Button("Run Seeds"))
+        {
+            for(int i = 0; i<= 100; i++)
+            {
+                mapGen.seed = i;
+                mapGen.GenerateMap();
+            }
+        }      
     }
 }

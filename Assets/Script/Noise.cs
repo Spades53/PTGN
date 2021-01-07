@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.IO;
+using System.Text;
 using UnityEngine;
 
 public static class Noise
@@ -58,9 +60,29 @@ public static class Noise
                 {
                     minNoiseHeight = noiseHeight;
                 }
-                noiseMap[x, y] = noiseHeight;
+                noiseMap[x, y] = noiseHeight;                
             }
         }
+
+        // getting height map values
+        string path = @"C:\Users\Marco\Desktop\Visual Computing Data\NoiseData" + seed + ".csv";
+
+        if (!File.Exists(path))
+        {
+            string[] noiseMapData = new string[noiseMap.Length+1];
+            int i = 0;
+            noiseMapData[i] = "Seed Number: " + seed.ToString() + ";";
+            i++;
+
+            foreach (float data in noiseMap)
+            {
+                noiseMapData[i] = data.ToString().Replace(",",".");
+                i++;
+            }
+
+            File.WriteAllLines(path, noiseMapData);
+        }
+
 
         for (int y = 0; y < mapHeight; y++)
         {
@@ -70,6 +92,8 @@ public static class Noise
                 //normalizing noiseMap
             }
         }
+
+        
         return noiseMap;
     }
 }
